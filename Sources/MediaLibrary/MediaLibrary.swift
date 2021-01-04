@@ -1,3 +1,3 @@
-struct medialibrary_ios {
+struct MediaLibrary {
     var text = "Hello, World!"
 }

@@ -1,7 +1,7 @@
 import XCTest
 
-import medialibrary_iosTests
+import MediaLibraryTests
 
 var tests = [XCTestCaseEntry]()
-tests += medialibrary_iosTests.allTests()
+tests += MediaLibraryTests.allTests()
 XCTMain(tests)
