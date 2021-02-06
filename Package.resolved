@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FetchImage",
+        "repositoryURL": "https://github.com/kean/FetchImage.git",
+        "state": {
+          "branch": null,
+          "revision": "3b68b12f25d6060ed102523ebff394c4f8e31cec",
+          "version": "0.3.0"
+        }
+      },
+      {
+        "package": "ImagePublisher",
+        "repositoryURL": "https://github.com/kean/ImagePublisher.git",
+        "state": {
+          "branch": null,
+          "revision": "b74c0c3b36c5f77023891f996be818fafc77f264",
+          "version": "0.2.1"
+        }
+      },
+      {
+        "package": "Nuke",
+        "repositoryURL": "https://github.com/kean/Nuke.git",
+        "state": {
+          "branch": null,
+          "revision": "fdde04a80497b54e2773c5e5d02dfbb9bdbe99a9",
+          "version": "9.2.3"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

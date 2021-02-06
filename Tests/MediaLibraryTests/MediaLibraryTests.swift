@@ -5,7 +5,7 @@ final class MediaLibraryTests: XCTestCase {
     
     func testExample() {
         
-        XCTAssertEqual(MediaLibrary().text, "Hello, World!")
+//        XCTAssertEqual(MediaLibrary().text, "Hello, World!")
     }
 
     static var allTests = [

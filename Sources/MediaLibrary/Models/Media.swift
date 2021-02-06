@@ -6,8 +6,16 @@
 //
 
 import Foundation
+import Nuke
+import CoreGraphics
 
-public struct Media: Codable {
+public protocol BaseMedia: Codable {
+    
+//    func getImage(width: CGFloat, height: CGFloat, callback: ((PlatformImage) -> Void))
+    
+}
+
+public struct Media: BaseMedia {
     
     public var id: Int
     public var modelType: String
@@ -43,7 +51,7 @@ public struct Media: Codable {
     
     public var humanReadableSize: String {
         
-        let test = Measurement(value: Double(size), unit: UnitInformationStorage.bytes)
+        let sizeInBytes = Measurement(value: Double(size), unit: UnitInformationStorage.bytes)
         
         let numberFormatter = NumberFormatter()
         let formatter = MeasurementFormatter()
@@ -55,8 +63,12 @@ public struct Media: Codable {
         formatter.numberFormatter = numberFormatter
         formatter.locale = Locale.autoupdatingCurrent
         
-        return formatter.string(from: test)
+        return formatter.string(from: sizeInBytes)
         
+    }
+    
+    public func getImage(width: CGFloat, height: CGFloat, callback: ((PlatformImage) -> Void)) {
+        callback(PlatformImage())
     }
     
 }

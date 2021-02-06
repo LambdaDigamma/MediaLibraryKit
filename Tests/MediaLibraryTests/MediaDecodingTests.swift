@@ -40,7 +40,7 @@ final class MediaDecodingTests: XCTestCase {
             XCTAssertEqual(media.collectionName, "header")
             XCTAssertEqual(media.name, "some-image.png")
             XCTAssertEqual(media.fileName, "some-filename.png")
-            XCTAssertEqual(media.mimeType, .imagePng)
+            XCTAssertEqual(media.mimeType, .png)
             XCTAssertEqual(media.disk, "public")
             XCTAssertEqual(media.conversionsDisk, "public")
             XCTAssertEqual(media.size, 157787)

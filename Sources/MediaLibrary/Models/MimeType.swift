@@ -9,12 +9,12 @@ import Foundation
 
 public enum MimeType: String, Codable {
     
-    case imagePng = "image/png"
-    case audioAac = "audio/aac"
-    case imageBmp = "image/bmp"
+    case png = "image/png"
+    case audio = "audio/aac"
+    case bmp = "image/bmp"
     case doc = "application/msword"
     case docx = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    case imageGif = "image/gif"
+    case gif = "image/gif"
     case html = "text/html"
     case jpg = "image/jpeg"
     case json = "application/json"
@@ -42,5 +42,23 @@ public enum MimeType: String, Codable {
     case xls = "application/vnd.ms-excel"
     case xlsx = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     case zip = "application/zip"
+    
+    public static let imageMimeTypes: [MimeType] = [
+        .png,
+        .bmp,
+        .jpg,
+        .tif,
+        .webp,
+        .svg
+    ]
+    
+    public static let displayableByImageProcessingPipeline: [MimeType] = [
+        .png,
+        .jpg
+    ]
+    
+    public var isImageMimeType: Bool {
+        return MimeType.imageMimeTypes.contains(self)
+    }
     
 }
