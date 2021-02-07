@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 import Nuke
 
 public enum MediaImageDataType {
@@ -15,7 +16,7 @@ public enum MediaImageDataType {
 
 public protocol MediaImageDisplayable {
     
-    func data() -> MediaImageDataType
+    func data(width: CGFloat, height: CGFloat) -> MediaImageDataType
     
     func accessibilityLabel() -> String?
     

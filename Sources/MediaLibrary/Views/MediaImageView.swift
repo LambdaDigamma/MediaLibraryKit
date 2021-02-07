@@ -11,30 +11,26 @@ import Nuke
 public struct MediaImageView: View {
     
     public let displayable: MediaImageDisplayable
+    public let sizingMode: SizingMode
     
-    public init(displayable: MediaImageDisplayable) {
+    public init(displayable: MediaImageDisplayable,
+                sizingMode: SizingMode = .original) {
         self.displayable = displayable
+        self.sizingMode = sizingMode
     }
     
     public var body: some View {
         
         imageView
-            .aspectRatio(contentMode: .fill)
+//            .aspectRatio(contentMode: .fill)
             .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
         
 //        GeometryReader { geo in
-            
 //            ZStack {
 //                Rectangle().fill(Color.gray)
 //
-            
-//                fetchImage
-//                    .view?
-//                    imageView
 //                    .aspectRatio(contentMode: .fill)
-//                    .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
 //            }
-        
 //        }
         
     }
@@ -42,17 +38,57 @@ public struct MediaImageView: View {
     @ViewBuilder
     private var imageView: some View {
         
-        switch displayable.data() {
-            case MediaImageDataType.local(let image):
-                Image(uiImage: image)
-                    .resizable()
+        GeometryReader { geo in
+            
+            switch displayable.data(width: geo.size.width,
+                                    height: geo.size.height) {
+                case MediaImageDataType.local(let image):
                     
-            case MediaImageDataType.remote(let request):
-                RemoteImage(request: request)
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+//                        .aspectRatio(contentMode: .fit)
+                        
+//                        .clipped()
+                        .frame(width: geo.size.width, alignment: .center)
+//                        .aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+                        .aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+                        .clipped()
+                        
+                        
+                        
+                    Text("\(sizingMode.imageRatio!)")
+                    
+//                        .frame(maxWidth: .infinity)
+//                        .clipped()
+                    
+                case MediaImageDataType.remote(let request):
+                    RemoteImage(request: request)
+            }
+            
         }
         
     }
     
+}
+
+public extension MediaImageView {
+    
+    enum SizingMode {
+        
+        case original
+        case aspectRatio(width: CGFloat, height: CGFloat)
+        
+        public var imageRatio: CGFloat? {
+            switch self {
+                case .original:
+                    return nil
+                case .aspectRatio(let width, let height):
+                    return width / height
+            }
+        }
+        
+    }
     
 }
 
@@ -60,7 +96,7 @@ struct MediaImageView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        let localImage = LocalImage(
+        let localImage = LocalMediaImage(
             image: PlatformImage(
                 named: "placeholder",
                 in: .module,
@@ -70,16 +106,16 @@ struct MediaImageView_Previews: PreviewProvider {
         
         return Group {
             
-            MediaImageView(displayable: localImage)
-                .previewDisplayName("Local Image")
-                .previewLayout(.fixed(width: 160 * 3, height: 90 * 3))
+            VStack {
+                MediaImageView(displayable: localImage, sizingMode: .aspectRatio(width: 2, height: 1))
+                    .padding()
+            }
+            .previewDisplayName("Local Image")
+//            .previewLayout(.fixed(width: 160 * 3, height: 90 * 6))
             
             
         }
         
-        
-        
-//        let url = URL(string: "https://images.unsplash.com/photo-1612543827278-d19245d6a00d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=3200&q=80")!
         
         
 //            .aspectRatio(CGSize(width: 16, height: 9), contentMode: .fit)
@@ -87,4 +123,5 @@ struct MediaImageView_Previews: PreviewProvider {
 //            .frame(width: 80, height: 80)
 //            .clipped()
     }
+    
 }

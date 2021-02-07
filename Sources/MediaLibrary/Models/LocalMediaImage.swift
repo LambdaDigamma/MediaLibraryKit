@@ -9,7 +9,7 @@ import Foundation
 import CoreGraphics
 import Nuke
 
-public struct LocalImage: MediaImageDisplayable {
+public struct LocalMediaImage: MediaImageDisplayable {
     
     public let image: PlatformImage
     public let label: String?
@@ -23,7 +23,7 @@ public struct LocalImage: MediaImageDisplayable {
         self.init(image: PlatformImage(named: imageName) ?? PlatformImage(), label: label)
     }
     
-    public func data() -> MediaImageDataType {
+    public func data(width: CGFloat, height: CGFloat) -> MediaImageDataType {
         return .local(image: image)
     }
     
