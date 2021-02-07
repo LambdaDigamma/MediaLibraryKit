@@ -23,7 +23,7 @@ public struct LocalMediaImage: MediaImageDisplayable {
         self.init(image: PlatformImage(named: imageName) ?? PlatformImage(), label: label)
     }
     
-    public func data(width: CGFloat, height: CGFloat) -> MediaImageDataType {
+    public func data(width: CGFloat) -> MediaImageDataType {
         return .local(image: image)
     }
     

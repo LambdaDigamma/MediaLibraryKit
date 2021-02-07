@@ -16,7 +16,7 @@ public enum MediaImageDataType {
 
 public protocol MediaImageDisplayable {
     
-    func data(width: CGFloat, height: CGFloat) -> MediaImageDataType
+    func data(width: CGFloat) -> MediaImageDataType
     
     func accessibilityLabel() -> String?
     
