@@ -24,14 +24,6 @@ public struct MediaImageView: View {
         imageView
             .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
         
-//        GeometryReader { geo in
-//            ZStack {
-//                Rectangle().fill(Color.gray)
-//
-//                    .aspectRatio(contentMode: .fill)
-//            }
-//        }
-        
     }
     
     @ViewBuilder
@@ -47,9 +39,12 @@ public struct MediaImageView: View {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
-                        .conditionalModifier(sizingMode == SizingMode.original, ifTrue: {
-                            $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
-                        }, ifFalse: { $0 })
+                        .conditionalModifier(
+                            sizingMode == SizingMode.original,
+                            ifTrue: {
+                                $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+                            },
+                            ifFalse: { $0 })
                         .frame(
                             width: geo.size.width,
                             height: sizingMode.calculateHeight(with: geo.size.width),
@@ -57,7 +52,21 @@ public struct MediaImageView: View {
                         .clipped()
                     
                 case MediaImageDataType.remote(let request):
+                    
                     RemoteImage(request: request)
+                        .scaledToFill()
+                        .conditionalModifier(
+                            sizingMode == SizingMode.original,
+                            ifTrue: {
+                                $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+                            },
+                            ifFalse: { $0 })
+                        .frame(
+                            width: geo.size.width,
+                            height: sizingMode.calculateHeight(with: geo.size.width),
+                            alignment: .center)
+                        .clipped()
+                                        
             }
             
         }
@@ -112,6 +121,7 @@ struct MediaImageView_Previews: PreviewProvider {
                 MediaImageView(displayable: localImage,
                                sizingMode: .aspectRatio(width: 2, height: 1))
                     .padding()
+                Text("Test")
             }
             .previewDisplayName("Local Image Aspect Ratio")
             
@@ -119,19 +129,13 @@ struct MediaImageView_Previews: PreviewProvider {
                 MediaImageView(displayable: localImage,
                                sizingMode: .original)
                     .padding()
+                
+                Text("Test")
             }
             .previewDisplayName("Local Image Original")
-//            .previewLayout(.fixed(width: 160 * 3, height: 90 * 6))
-            
             
         }
         
-        
-        
-//            .aspectRatio(CGSize(width: 16, height: 9), contentMode: .fit)
-//            .frame(maxWidth: .infinity)
-//            .frame(width: 80, height: 80)
-//            .clipped()
     }
     
 }
