@@ -22,7 +22,6 @@ public struct MediaImageView: View {
     public var body: some View {
         
         imageView
-//            .aspectRatio(contentMode: .fill)
             .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
         
 //        GeometryReader { geo in
@@ -42,25 +41,20 @@ public struct MediaImageView: View {
             
             switch displayable.data(width: geo.size.width,
                                     height: geo.size.height) {
+                
                 case MediaImageDataType.local(let image):
                     
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
-//                        .aspectRatio(contentMode: .fit)
-                        
-//                        .clipped()
-                        .frame(width: geo.size.width, alignment: .center)
-//                        .aspectRatio(sizingMode.imageRatio, contentMode: .fit)
-                        .aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+                        .conditionalModifier(sizingMode == SizingMode.original, ifTrue: {
+                            $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+                        }, ifFalse: { $0 })
+                        .frame(
+                            width: geo.size.width,
+                            height: sizingMode.calculateHeight(with: geo.size.width),
+                            alignment: .center)
                         .clipped()
-                        
-                        
-                        
-                    Text("\(sizingMode.imageRatio!)")
-                    
-//                        .frame(maxWidth: .infinity)
-//                        .clipped()
                     
                 case MediaImageDataType.remote(let request):
                     RemoteImage(request: request)
@@ -74,7 +68,7 @@ public struct MediaImageView: View {
 
 public extension MediaImageView {
     
-    enum SizingMode {
+    enum SizingMode: Equatable {
         
         case original
         case aspectRatio(width: CGFloat, height: CGFloat)
@@ -84,7 +78,15 @@ public extension MediaImageView {
                 case .original:
                     return nil
                 case .aspectRatio(let width, let height):
-                    return width / height
+                    return height / width
+            }
+        }
+        
+        public func calculateHeight(with width: CGFloat) -> CGFloat? {
+            if let ratio = self.imageRatio {
+                return width * ratio
+            } else {
+                return nil
             }
         }
         
@@ -107,10 +109,18 @@ struct MediaImageView_Previews: PreviewProvider {
         return Group {
             
             VStack {
-                MediaImageView(displayable: localImage, sizingMode: .aspectRatio(width: 2, height: 1))
+                MediaImageView(displayable: localImage,
+                               sizingMode: .aspectRatio(width: 2, height: 1))
                     .padding()
             }
-            .previewDisplayName("Local Image")
+            .previewDisplayName("Local Image Aspect Ratio")
+            
+            VStack {
+                MediaImageView(displayable: localImage,
+                               sizingMode: .original)
+                    .padding()
+            }
+            .previewDisplayName("Local Image Original")
 //            .previewLayout(.fixed(width: 160 * 3, height: 90 * 6))
             
             
