@@ -19,6 +19,8 @@ public struct MediaImageView: View {
     public let displayable: MediaImageDisplayable
     public let sizingMode: SizingMode
     
+    @State var test: [String] = []
+    
     public init(displayable: MediaImageDisplayable,
                 sizingMode: SizingMode = .original) {
         self.displayable = displayable
@@ -27,30 +29,98 @@ public struct MediaImageView: View {
     
     public var body: some View {
         
-        imageView
-            .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
+        SingleAxisGeometryReader { width in
+            image(width: width)
+                .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
+        }
         
-//        SingleAxisGeometryReader { width in
-//
-////            return Text("\(width)")
-////                .onAppear {
-////
-//////                    print(width)
-////                }
-//
-//            image(width: width)
-//                .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
-//                .onAppear { print(width) }
-//
-//
-//
-//        }
     }
     
     @ViewBuilder
     private func image(width: CGFloat) -> some View {
         
-        Text("\(width)")
+        switch displayable.data(width: width) {
+
+            case MediaImageDataType.local(let image):
+
+                Image(uiImage: image)
+                    .resizable()
+                    .conditionalModifier(
+                        sizingMode == SizingMode.original,
+                        ifTrue: {
+                            $0
+                                .aspectRatio(contentMode: .fit)
+                        },
+                        ifFalse: {
+                            $0
+                                .scaledToFill()
+                                .frame(maxWidth: width, maxHeight: sizingMode.calculateHeight(with: width))
+//                                .aspectRatio(1, contentMode: .fill)
+                                
+                        })
+                    
+                    //                .scaledToFill()
+                    //                .conditionalModifier(
+                    //                    sizingMode == SizingMode.original,
+                    //                    ifTrue: {
+                    //                        $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+                    //                    },
+                    //                    ifFalse: { $0 })
+
+                    //                .frame(
+                    //                    width: width,
+                    //                    height: height,
+                    //                    alignment: .center)
+                    .clipped()
+                    .onAppear {
+                        test.append("\(width)")
+                    }
+
+            case MediaImageDataType.remote(let request):
+
+                ImageView(request: request)
+            //                        .conditionalModifier(
+            //                            sizingMode == SizingMode.original,
+            //                            ifTrue: {
+            //                                $0
+            //                            },
+            //                            ifFalse: {
+            //                                $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+            //                                    .s
+            //                            })
+
+            //                    RemoteImage(request: request)
+            //                        .scaledToFill()
+            //                        .conditionalModifier(
+            //                            sizingMode == SizingMode.original,
+            //                            ifTrue: {
+            //                                $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
+            //                            },
+            //                            ifFalse: { $0 })
+            //                        .frame(
+            //                            width: width,
+            //                            height: height,
+            //                            alignment: .center)
+            //                        .clipped()
+
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        Text("\(test.joined(separator: ", "))")
             .onAppear {
                 print(width)
             }
@@ -67,60 +137,6 @@ public struct MediaImageView: View {
 //            EmptyView()
 //        }
         
-    }
-    
-    @ViewBuilder
-    private var imageView: some View {
-        
-//            Text("Test")
-        
-//        SingleAxisGeometryReader(
-        
-        
-//            switch displayable.data(width: width,
-//                                    height: geo.size.height) {
-                
-        let width: CGFloat = 100 //geo.size.width
-        let height: CGFloat = 100 // sizingMode.calculateHeight(with: geo.size.width)
-        
-         
-                switch displayable.data(width: 100) {
-
-                case MediaImageDataType.local(let image):
-
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFill()
-                        .conditionalModifier(
-                            sizingMode == SizingMode.original,
-                            ifTrue: {
-                                $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
-                            },
-                            ifFalse: { $0 })
-                        .frame(
-                            width: width,
-                            height: height,
-                            alignment: .center)
-                        .clipped()
-
-                case MediaImageDataType.remote(let request):
-
-                    RemoteImage(request: request)
-                        .scaledToFill()
-                        .conditionalModifier(
-                            sizingMode == SizingMode.original,
-                            ifTrue: {
-                                $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
-                            },
-                            ifFalse: { $0 })
-                        .frame(
-                            width: width,
-                            height: height,
-                            alignment: .center)
-                        .clipped()
-
-            }
-            
     }
         
 }
@@ -166,24 +182,40 @@ struct MediaImageView_Previews: PreviewProvider {
             )!
         )
         
+        let remoteImage = RemoteMediaImage(
+            request: URL(string: "https://images.unsplash.com/photo-1548335599-8ed902028f3f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80")!.asImageRequest(),
+            label: "Placeholder"
+        )
+        
         return Group {
             
             VStack {
                 MediaImageView(displayable: localImage,
-                               sizingMode: .aspectRatio(width: 2, height: 1))
+                               sizingMode: .aspectRatio(width: 16, height: 9))
                     .padding()
-                Text("Test")
             }
             .previewDisplayName("Local Image Aspect Ratio")
             
-            VStack {
-                MediaImageView(displayable: localImage,
-                               sizingMode: .original)
-                    .padding()
-                
-                Text("Test")
-            }
-            .previewDisplayName("Local Image Original")
+//            VStack {
+//                MediaImageView(displayable: localImage,
+//                               sizingMode: .original)
+//                    .padding()
+//
+//                Text("Test")
+//            }
+//            .previewDisplayName("Local Image Original")
+//
+//            VStack {
+//
+//                MediaImageView(displayable: remoteImage)
+//
+//            }.previewDisplayName("Remote Image Original")
+//
+//            VStack {
+//
+//                MediaImageView(displayable: remoteImage, sizingMode: .aspectRatio(width: 2, height: 1))
+//
+//            }.previewDisplayName("Remote Image Aspect Ratio")
             
         }
         

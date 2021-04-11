@@ -11,7 +11,7 @@ import Nuke
 
 public struct RemoteImage: View {
     
-    @StateObject var fetchImage = FetchImage()
+    @ObservedObject var fetchImage = FetchImage()
     
     let request: ImageRequestConvertible
     
@@ -21,24 +21,49 @@ public struct RemoteImage: View {
     }
     
     public var body: some View {
-        ZStack {
-            Rectangle().fill(Color.gray)
-            Image("placeholder")
-            fetchImage.view?
-                .resizable()
-//                .aspectRatio(contentMode: .fill)
-                // Cancel and restart the request during scrolling
-                // If the view is still on screen, use `cancel()` instead of `reset()`.
-                .onAppear {
-//                    withoutAnimation {
-                        fetchImage.load(request.asImageRequest())
-//                    }
-                }
+        
+        
+//        Image("placeholder", bundle: .module)
+//            .resizable()
+//            .aspectRatio(contentMode: .fill)
+
+        fetchImage.view?
+//            .frame(width: 100, height: 100)
+//            .resizable()
+//            .aspectRatio(contentMode: .fill)
+            // Cancel and restart the request during scrolling
+            // If the view is still on screen, use `cancel()` instead of `reset()`.
+//            .onAppear {
+//                print("jkfasdjklf")
+////                    withoutAnimation {
+//                fetchImage.load(request.asImageRequest())
+////                    }
+//            }
 //                .onDisappear {
 //                    fetchImage.reset()
 //                }
-                .animation(.default) // (Optional) Animate image appearance
-        }
+            .animation(.default) // (Optional) Animate image appearance
+        
+        
+//        ZStack {
+//            Rectangle().fill(Color.gray)
+            
+                
+//            fetchImage.view?
+//                .resizable()
+////                .aspectRatio(contentMode: .fill)
+//                // Cancel and restart the request during scrolling
+//                // If the view is still on screen, use `cancel()` instead of `reset()`.
+//                .onAppear {
+////                    withoutAnimation {
+//                        fetchImage.load(request.asImageRequest())
+////                    }
+//                }
+////                .onDisappear {
+////                    fetchImage.reset()
+////                }
+//                .animation(.default) // (Optional) Animate image appearance
+//        }
         
     }
     
@@ -61,9 +86,9 @@ struct RemoteImage_Previews: PreviewProvider {
             if let url = URL(string: "https://moers-festival.de/media/c1b3af14a07376c852933cd8bc8c94f5/festival21.jpg") {
                 
 //                Text("Fdaskfdas")
-                
                 RemoteImage(request: url)
-                    .frame(maxWidth: .infinity, maxHeight: 400, alignment: .leading)
+                    .frame(maxWidth: 400, minHeight: 400, alignment: .center)
+                    .background(Color.red)
                 
             } else {
                 EmptyView()
