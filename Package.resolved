@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/kean/FetchImage.git",
         "state": {
           "branch": null,
-          "revision": "3b68b12f25d6060ed102523ebff394c4f8e31cec",
-          "version": "0.3.0"
+          "revision": "cac844a0dea908c6e068fc8c6a0f949179c7f876",
+          "version": "0.4.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/kean/Nuke.git",
         "state": {
           "branch": null,
-          "revision": "961597d324949c7003c77d602bfc4d5519b47e81",
-          "version": "9.2.4"
+          "revision": "200016df418ed8dc70ba918d52c29634f434541c",
+          "version": "9.5.0"
         }
       }
     ]

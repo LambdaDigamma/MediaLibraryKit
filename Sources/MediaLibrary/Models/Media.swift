@@ -9,13 +9,13 @@ import Foundation
 import Nuke
 import CoreGraphics
 
-public protocol BaseMedia: Codable {
+public protocol BaseMedia: Codable, Equatable {
     
 //    func getImage(width: CGFloat, height: CGFloat, callback: ((PlatformImage) -> Void))
     
 }
 
-public struct Media: BaseMedia {
+public struct Media: BaseMedia, Equatable, MediaImageDisplayable {
     
     public var id: Int
     public var modelType: String
@@ -29,8 +29,13 @@ public struct Media: BaseMedia {
     public var conversionsDisk: String?
     public var size: Int
     public var order: Int?
+    public var alt: String?
+    public var caption: String?
+    public var credits: String?
     public var createdAt: Date? = Date()
     public var updatedAt: Date? = Date()
+    
+    public var fullURL: URL?
     
     public enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -47,6 +52,10 @@ public struct Media: BaseMedia {
         case order = "order_column"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+        case alt = "alt"
+        case caption = "caption"
+        case credits = "credits"
+        case fullURL = "full_url"
     }
     
     public var humanReadableSize: String {
@@ -69,6 +78,20 @@ public struct Media: BaseMedia {
     
     public func getImage(width: CGFloat, height: CGFloat, callback: ((PlatformImage) -> Void)) {
         callback(PlatformImage())
+    }
+    
+    public func data(width: CGFloat) -> MediaImageDataType {
+        
+        if let fullURL = fullURL {
+            return .remote(request: ImageRequest(url: fullURL))
+        } else {
+            return .local(image: PlatformImage())
+        }
+        
+    }
+    
+    public func accessibilityLabel() -> String? {
+        return alt
     }
     
 }

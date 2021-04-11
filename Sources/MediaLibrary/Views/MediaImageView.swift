@@ -8,6 +8,12 @@
 import SwiftUI
 import Nuke
 
+/// *Option 1*: Load image only when view appeared so that we only load it if the final width is known.
+/// *Option 2*: Filter out all non layout values (`10`) via "binding".
+
+/// We need to know the frame -> at least the width!
+///
+
 public struct MediaImageView: View {
     
     public let displayable: MediaImageDisplayable
@@ -24,18 +30,64 @@ public struct MediaImageView: View {
         imageView
             .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
         
+//        SingleAxisGeometryReader { width in
+//
+////            return Text("\(width)")
+////                .onAppear {
+////
+//////                    print(width)
+////                }
+//
+//            image(width: width)
+//                .accessibilityLabel(Text(displayable.accessibilityLabel() ?? ""))
+//                .onAppear { print(width) }
+//
+//
+//
+//        }
+    }
+    
+    @ViewBuilder
+    private func image(width: CGFloat) -> some View {
+        
+        Text("\(width)")
+            .onAppear {
+                print(width)
+            }
+        
+        // Use this weird fix to only load the image when the geometry reader read the right width.
+//        if width != 10 {
+//
+//            Text("\(width)")
+//                .onAppear {
+//                    print(width)
+//                }
+//
+//        } else {
+//            EmptyView()
+//        }
+        
     }
     
     @ViewBuilder
     private var imageView: some View {
         
-        GeometryReader { geo in
-            
-            switch displayable.data(width: geo.size.width,
-                                    height: geo.size.height) {
+//            Text("Test")
+        
+//        SingleAxisGeometryReader(
+        
+        
+//            switch displayable.data(width: width,
+//                                    height: geo.size.height) {
                 
+        let width: CGFloat = 100 //geo.size.width
+        let height: CGFloat = 100 // sizingMode.calculateHeight(with: geo.size.width)
+        
+         
+                switch displayable.data(width: 100) {
+
                 case MediaImageDataType.local(let image):
-                    
+
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
@@ -46,13 +98,13 @@ public struct MediaImageView: View {
                             },
                             ifFalse: { $0 })
                         .frame(
-                            width: geo.size.width,
-                            height: sizingMode.calculateHeight(with: geo.size.width),
+                            width: width,
+                            height: height,
                             alignment: .center)
                         .clipped()
-                    
+
                 case MediaImageDataType.remote(let request):
-                    
+
                     RemoteImage(request: request)
                         .scaledToFill()
                         .conditionalModifier(
@@ -62,17 +114,15 @@ public struct MediaImageView: View {
                             },
                             ifFalse: { $0 })
                         .frame(
-                            width: geo.size.width,
-                            height: sizingMode.calculateHeight(with: geo.size.width),
+                            width: width,
+                            height: height,
                             alignment: .center)
                         .clipped()
-                                        
+
             }
             
-        }
-        
     }
-    
+        
 }
 
 public extension MediaImageView {
@@ -97,6 +147,7 @@ public extension MediaImageView {
             } else {
                 return nil
             }
+//            PlatformImage().
         }
         
     }

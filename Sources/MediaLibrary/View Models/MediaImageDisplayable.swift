@@ -18,6 +18,8 @@ public protocol MediaImageDisplayable {
     
     func data(width: CGFloat) -> MediaImageDataType
     
+//    func aspectRatio(for width: CGFloat) -> CGFloat
+    
     func accessibilityLabel() -> String?
     
 }
