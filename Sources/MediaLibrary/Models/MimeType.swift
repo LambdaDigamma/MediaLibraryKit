@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum MimeType: String, Codable {
+public enum MimeType: String, Codable, Hashable {
     
     case png = "image/png"
     case audio = "audio/aac"

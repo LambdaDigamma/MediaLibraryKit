@@ -39,8 +39,12 @@ public struct MediaImageView: View {
     @ViewBuilder
     private func image(width: CGFloat) -> some View {
         
+        if width != 10 {
+            
+        }
+        
         switch displayable.data(width: width) {
-
+            
             case MediaImageDataType.local(let image):
 
                 Image(uiImage: image)
@@ -55,87 +59,29 @@ public struct MediaImageView: View {
                             $0
                                 .scaledToFill()
                                 .frame(maxWidth: width, maxHeight: sizingMode.calculateHeight(with: width))
-//                                .aspectRatio(1, contentMode: .fill)
-                                
-                        })
-                    
-                    //                .scaledToFill()
-                    //                .conditionalModifier(
-                    //                    sizingMode == SizingMode.original,
-                    //                    ifTrue: {
-                    //                        $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
-                    //                    },
-                    //                    ifFalse: { $0 })
-
-                    //                .frame(
-                    //                    width: width,
-                    //                    height: height,
-                    //                    alignment: .center)
+                        }
+                    )
                     .clipped()
-                    .onAppear {
-                        test.append("\(width)")
-                    }
+                    
 
             case MediaImageDataType.remote(let request):
 
                 ImageView(request: request)
-            //                        .conditionalModifier(
-            //                            sizingMode == SizingMode.original,
-            //                            ifTrue: {
-            //                                $0
-            //                            },
-            //                            ifFalse: {
-            //                                $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
-            //                                    .s
-            //                            })
-
-            //                    RemoteImage(request: request)
-            //                        .scaledToFill()
-            //                        .conditionalModifier(
-            //                            sizingMode == SizingMode.original,
-            //                            ifTrue: {
-            //                                $0.aspectRatio(sizingMode.imageRatio, contentMode: .fit)
-            //                            },
-            //                            ifFalse: { $0 })
-            //                        .frame(
-            //                            width: width,
-            //                            height: height,
-            //                            alignment: .center)
-            //                        .clipped()
+                    .conditionalModifier(
+                        sizingMode == SizingMode.original,
+                        ifTrue: {
+                            $0
+                                .aspectRatio(contentMode: .fit)
+                        },
+                        ifFalse: {
+                            $0
+                                .scaledToFill()
+                                .frame(maxWidth: width, maxHeight: sizingMode.calculateHeight(with: width))
+                        }
+                    )
+                    .clipped()
 
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        Text("\(test.joined(separator: ", "))")
-            .onAppear {
-                print(width)
-            }
-        
-        // Use this weird fix to only load the image when the geometry reader read the right width.
-//        if width != 10 {
-//
-//            Text("\(width)")
-//                .onAppear {
-//                    print(width)
-//                }
-//
-//        } else {
-//            EmptyView()
-//        }
         
     }
         
@@ -163,7 +109,6 @@ public extension MediaImageView {
             } else {
                 return nil
             }
-//            PlatformImage().
         }
         
     }
@@ -196,26 +141,25 @@ struct MediaImageView_Previews: PreviewProvider {
             }
             .previewDisplayName("Local Image Aspect Ratio")
             
-//            VStack {
-//                MediaImageView(displayable: localImage,
-//                               sizingMode: .original)
-//                    .padding()
-//
-//                Text("Test")
-//            }
-//            .previewDisplayName("Local Image Original")
-//
-//            VStack {
-//
-//                MediaImageView(displayable: remoteImage)
-//
-//            }.previewDisplayName("Remote Image Original")
-//
-//            VStack {
-//
-//                MediaImageView(displayable: remoteImage, sizingMode: .aspectRatio(width: 2, height: 1))
-//
-//            }.previewDisplayName("Remote Image Aspect Ratio")
+            VStack {
+                MediaImageView(displayable: localImage,
+                               sizingMode: .original)
+                    .padding()
+
+            }
+            .previewDisplayName("Local Image Original")
+
+            VStack {
+
+                MediaImageView(displayable: remoteImage)
+
+            }.previewDisplayName("Remote Image Original")
+
+            VStack {
+
+                MediaImageView(displayable: remoteImage, sizingMode: .aspectRatio(width: 1, height: 1))
+
+            }.previewDisplayName("Remote Image Aspect Ratio")
             
         }
         

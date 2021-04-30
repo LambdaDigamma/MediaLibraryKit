@@ -15,7 +15,7 @@ public protocol BaseMedia: Codable, Equatable {
     
 }
 
-public struct Media: BaseMedia, Equatable, MediaImageDisplayable {
+public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable {
     
     public var id: Int
     public var modelType: String

@@ -20,6 +20,7 @@ public struct RemoteMediaImage: MediaImageDisplayable {
     }
     
     public func data(width: CGFloat) -> MediaImageDataType {
+        print("width: \(width)")
         return .remote(request: request)
     }
     
