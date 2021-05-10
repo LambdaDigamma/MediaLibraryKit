@@ -14,6 +14,7 @@ public class MediaDecoder: JSONDecoder {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z"
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
         
         self.dateDecodingStrategy = .formatted(formatter)
         
