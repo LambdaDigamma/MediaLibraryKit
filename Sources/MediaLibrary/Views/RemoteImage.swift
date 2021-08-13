@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import FetchImage
 import Nuke
 
 public struct RemoteImage: View {
     
-    @ObservedObject var fetchImage = FetchImage()
+    @ObservedObject var fetchImage = Nuke.FetchImage()
     
     let request: ImageRequestConvertible
     

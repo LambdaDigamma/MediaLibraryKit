@@ -20,12 +20,21 @@ public struct RemoteMediaImage: MediaImageDisplayable {
     }
     
     public func data(width: CGFloat) -> MediaImageDataType {
-        print("width: \(width)")
         return .remote(request: request)
     }
     
     public func accessibilityLabel() -> String? {
         return label
     }
+    
+//    public static func == (lhs: RemoteMediaImage, rhs: RemoteMediaImage) -> Bool {
+//        return lhs.label == rhs.label
+//            && lhs.request.asImageRequest().urlRequest.url == rhs.request.asImageRequest().urlRequest.url
+//    }
+//
+//    public func hash(into hasher: inout Hasher) {
+//        hasher.combine(label)
+//        hasher.combine(request.asImageRequest().urlRequest.url)
+//    }
     
 }

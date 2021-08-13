@@ -5,6 +5,8 @@
 //  Created by Lennart Fischer on 11.04.21.
 //
 
+#if canImport(UIKit)
+
 import UIKit
 import SwiftUI
 
@@ -57,3 +59,5 @@ struct MediaImageViewRepresentable_Previews: PreviewProvider {
     }
     
 }
+
+#endif

@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import FetchImage
 import Nuke
 
 struct ImageView: View {
     
     let request: ImageRequestConvertible
     
-    @StateObject private var image = FetchImage()
+    @StateObject private var image = Nuke.FetchImage()
     
     var body: some View {
         VStack {

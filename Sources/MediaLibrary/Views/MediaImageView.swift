@@ -5,6 +5,8 @@
 //  Created by Lennart Fischer on 15.01.21.
 //
 
+#if canImport(UIKit)
+
 import SwiftUI
 import Nuke
 
@@ -166,3 +168,5 @@ struct MediaImageView_Previews: PreviewProvider {
     }
     
 }
+
+#endif
