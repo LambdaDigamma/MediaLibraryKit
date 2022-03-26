@@ -3,12 +3,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "MediaLibrary",
+    name: "MediaLibraryKit",
     platforms: [.iOS(.v14), .macOS(.v11), .watchOS(.v7), .tvOS(.v14)],
     products: [
         .library(
-            name: "MediaLibrary",
-            targets: ["MediaLibrary"]),
+            name: "MediaLibraryKit",
+            targets: ["MediaLibraryKit"]
+        ),
     ],
     dependencies: [
         .package(name: "Nuke", url: "https://github.com/kean/Nuke.git", .upToNextMajor(from: "10.0.0")),
@@ -16,12 +17,12 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MediaLibrary",
+            name: "MediaLibraryKit",
             dependencies: ["Nuke", "NukeUI"]
         ),
         .testTarget(
-            name: "MediaLibraryTests",
-            dependencies: ["MediaLibrary"]
+            name: "MediaLibraryKitTests",
+            dependencies: ["MediaLibraryKit"]
         ),
     ]
 )

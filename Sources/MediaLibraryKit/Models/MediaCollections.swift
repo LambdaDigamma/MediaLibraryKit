@@ -13,7 +13,7 @@ public struct MediaCollectionsContainer: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        collections = try container.decode([String: [Media]].self)
+        collections = (try? container.decode([String: [Media]].self)) ?? [:]
     }
     
     public func getMedia(for key: String = "default") -> [Media] {

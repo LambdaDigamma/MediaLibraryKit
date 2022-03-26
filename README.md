@@ -1,7 +1,7 @@
-# MediaLibrary
+# MediaLibraryKit
 > Provides models and interaction with Spaties [laravel-medialibrary](https://github.com/spatie/laravel-medialibrary) php package.
 
-MediaLibrary provides a simple but very customizable way to interact with 
+MediaLibraryKit provides a simple but very customizable way to interact with media models in that structure. 
 
 
 

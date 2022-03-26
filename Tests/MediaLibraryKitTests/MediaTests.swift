@@ -1,7 +1,7 @@
 import XCTest
-@testable import MediaLibrary
+@testable import MediaLibraryKit
 
-final class MediaDecodingTests: XCTestCase {
+final class MediaTests: XCTestCase {
     
     func testBasicDecode() {
         
@@ -59,7 +59,4 @@ final class MediaDecodingTests: XCTestCase {
         
     }
     
-    static var allTests = [
-        ("testBasicDecode", testBasicDecode),
-    ]
 }
