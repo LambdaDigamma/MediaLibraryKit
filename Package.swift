@@ -11,12 +11,13 @@ let package = Package(
             targets: ["MediaLibrary"]),
     ],
     dependencies: [
-        .package(name: "Nuke", url: "https://github.com/kean/Nuke.git", .upToNextMajor(from: "10.0.0"))
+        .package(name: "Nuke", url: "https://github.com/kean/Nuke.git", .upToNextMajor(from: "10.0.0")),
+        .package(name: "NukeUI", url: "https://github.com/kean/NukeUI.git", .upToNextMajor(from: "0.6.8")),
     ],
     targets: [
         .target(
             name: "MediaLibrary",
-            dependencies: ["Nuke"]
+            dependencies: ["Nuke", "NukeUI"]
         ),
         .testTarget(
             name: "MediaLibraryTests",

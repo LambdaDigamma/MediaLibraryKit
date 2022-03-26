@@ -23,8 +23,10 @@ public struct MediaImageView: View {
     
     @State var test: [String] = []
     
-    public init(displayable: MediaImageDisplayable,
-                sizingMode: SizingMode = .original) {
+    public init(
+        displayable: MediaImageDisplayable,
+        sizingMode: SizingMode = .original
+    ) {
         self.displayable = displayable
         self.sizingMode = sizingMode
     }
