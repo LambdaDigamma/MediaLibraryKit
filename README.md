@@ -1,8 +1,12 @@
 # MediaLibraryKit
-> Provides models and interaction with Spaties [laravel-medialibrary](https://github.com/spatie/laravel-medialibrary) php package.
 
-MediaLibraryKit provides a simple but very customizable way to interact with media models in that structure. 
+<p align="left">
+<img src="https://img.shields.io/apm/l/atomic-design-ui.svg">
+<img src="https://img.shields.io/badge/platforms-iOS%2C%20macOS%2C%20watchOS%2C%20tvOS-lightgrey.svg">
+<img alt="Swift" src="https://github.com/LambdaDigamma/medialibrary-ios/actions/workflows/swift.yml/badge.svg">
+</p>
 
+Interact and work with the [Laravel MediaLibrary package](https://github.com/spatie/laravel-medialibrary) in your app.
 
 
 ## Installation
@@ -19,26 +23,21 @@ let package = Package(
 )
 ```
 
-```json
-{
-    "id": 2,
-    "model_type": "App\\Models\\SomeModel",
-    "model_id": 1,
-    "uuid": "15b010ea-1f12-48fd-a091-c2372a754bbb",
-    "collection_name": "header",
-    "name": "some-image.png",
-    "file_name": "some-filename.png",
-    "mime_type": "image/png",
-    "disk": "public",
-    "conversions_disk": "public",
-    "size": 157787,
-    "manipulations": [],
-    "custom_properties": [],
-    "order_column": 0,
-    "created_at": "2020-11-30T13:17:36.000000Z",
-    "updated_at": "2020-11-30T15:01:28.000000Z"
+## Getting started
+
+This package provides codable models for a media object and a media collection container for decoding entire collections.
+
+```swift
+import MediaLibraryKit
+
+struct Post: Codable {
+
+    let header: Media
+    
 }
+
 ```
+
 
 ### Changelog
 
