@@ -16,7 +16,7 @@ public protocol BaseMedia: Codable, Equatable {
     
 }
 
-public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable {
+public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable, Identifiable {
     
     public var id: Int
     public var modelType: String
@@ -34,6 +34,8 @@ public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable {
     public var alt: String?
     public var caption: String?
     public var credits: String?
+    public var responsiveWidth: Int?
+    public var responsiveHeight: Int?
     public var createdAt: Date? = Date()
     public var updatedAt: Date? = Date()
     
@@ -98,6 +100,8 @@ public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable {
         case caption = "caption"
         case credits = "credits"
         case fullURL = "full_url"
+        case responsiveWidth = "responsive_width"
+        case responsiveHeight = "responsive_height"
     }
     
     public var humanReadableSize: String {

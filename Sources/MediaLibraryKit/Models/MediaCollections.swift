@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MediaCollectionsContainer: Codable {
+public struct MediaCollectionsContainer: Codable, Equatable {
     
     public let collections: [String: [Media]]
     
