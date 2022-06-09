@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// A container type for keyed media collections
+/// You can get the default or specific media collections from this container.
 public struct MediaCollectionsContainer: Codable, Equatable {
     
     public let collections: [String: [Media]]
