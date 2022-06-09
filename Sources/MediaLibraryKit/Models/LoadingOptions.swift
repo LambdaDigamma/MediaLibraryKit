@@ -8,6 +8,7 @@
 import Foundation
 
 public struct LoadingOptions: OptionSet {
+    
     public let rawValue: Int
     
     public init(rawValue: Int) {
@@ -20,4 +21,5 @@ public struct LoadingOptions: OptionSet {
     public static let all: LoadingOptions = [
         .downloadOriginal, .downloadAllConversions
     ]
+    
 }

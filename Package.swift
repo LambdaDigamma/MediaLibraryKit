@@ -12,8 +12,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "Nuke", url: "https://github.com/kean/Nuke.git", .upToNextMajor(from: "10.0.0")),
-        .package(name: "NukeUI", url: "https://github.com/kean/NukeUI.git", .upToNextMajor(from: "0.6.8")),
+        .package(url: "https://github.com/kean/Nuke.git", from: "10.0.0"),
+        .package(url: "https://github.com/kean/NukeUI.git", from: "0.6.8"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
     ],
     targets: [
         .target(

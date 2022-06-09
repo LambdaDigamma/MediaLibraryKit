@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+/// Represents a list of the most common mime types
 public enum MimeType: String, Codable, Hashable {
     
     case png = "image/png"
