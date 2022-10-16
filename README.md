@@ -8,6 +8,11 @@
 
 Interact and work with the [Laravel MediaLibrary package](https://github.com/spatie/laravel-medialibrary) in your app.
 
+> **Warning**
+> 
+> This repository is in an experimental state and is used for a few projects under active development. 
+> Feel free to use it but be aware that some things may change in the future.
+
 
 ## Installation
 
