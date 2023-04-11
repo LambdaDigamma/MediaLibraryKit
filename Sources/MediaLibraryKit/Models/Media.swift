@@ -28,7 +28,7 @@ public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable, Iden
     public var mimeType: MimeType?
     public var disk: String
     public var conversionsDisk: String?
-    public var responsiveImages: ResponsiveImages?
+//    public var responsiveImages: ResponsiveImages?
     public var size: Int
     public var order: Int?
     public var alt: String?
@@ -91,7 +91,7 @@ public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable, Iden
         case mimeType = "mime_type"
         case disk = "disk"
         case conversionsDisk = "conversions_disk"
-        case responsiveImages = "responsive_images"
+//        case responsiveImages = "responsive_images"
         case size = "size"
         case order = "order_column"
         case createdAt = "created_at"
@@ -140,13 +140,24 @@ public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable, Iden
         return alt
     }
     
-    public struct ResponsiveImages: Codable, Equatable, Hashable {
-        
-        public let base64svg: String?
-        
-        public enum CodingKeys: String, CodingKey {
-            case base64svg = "base64svg"
-        }
-    }
+//    public struct ResponsiveImages: Codable, Equatable, Hashable {
+//
+//        public let base64svg: String?
+//
+//        public enum CodingKeys: String, CodingKey {
+//            case base64svg = "base64svg"
+//        }
+//
+//        public init(from decoder: Decoder) throws {
+//
+//            let container: KeyedDecodingContainer<Media.ResponsiveImages.CodingKeys> = try decoder.container(keyedBy: Media.ResponsiveImages.CodingKeys.self)
+//            self.base64svg = try container.decodeIfPresent(String.self, forKey: Media.ResponsiveImages.CodingKeys.base64svg)
+//        }
+//
+//        func encode(to encoder: Encoder) throws {
+//            var container = encoder.container(keyedBy: Media.ResponsiveImages.CodingKeys.self)
+//            try container.encodeIfPresent(self.base64svg, forKey: Media.ResponsiveImages.CodingKeys.base64svg)
+//        }
+//    }
     
 }

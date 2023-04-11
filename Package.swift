@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.7
 
 import PackageDescription
 
@@ -12,14 +12,19 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/kean/Nuke.git", from: "10.0.0"),
-        .package(url: "https://github.com/kean/NukeUI.git", from: "0.6.8"),
+        .package(url: "https://github.com/kean/Nuke.git", from: "11.0.0"),
+        .package(url: "https://github.com/makleso6/NukeWebP", from: "1.0.2"),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
     ],
     targets: [
         .target(
             name: "MediaLibraryKit",
-            dependencies: ["Nuke", "NukeUI"]
+            dependencies: [
+                .product(name: "Nuke", package: "Nuke"),
+                .product(name: "NukeUI", package: "Nuke"),
+                .product(name: "NukeWebP", package: "NukeWebP"),
+                .product(name: "NukeWebPBasic", package: "NukeWebP")
+            ]
         ),
         .testTarget(
             name: "MediaLibraryKitTests",

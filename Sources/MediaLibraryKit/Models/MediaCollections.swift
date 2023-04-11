@@ -11,11 +11,27 @@ import Foundation
 /// You can get the default or specific media collections from this container.
 public struct MediaCollectionsContainer: Codable, Equatable {
     
-    public let collections: [String: [Media]]
+    public var collections: [String: [Media]]
+    
+    public init(collections: [String: [Media]] = [:]) {
+        self.collections = collections
+    }
     
     public init(from decoder: Decoder) throws {
+        
         let container = try decoder.singleValueContainer()
-        collections = (try? container.decode([String: [Media]].self)) ?? [:]
+        
+        if let mediaArray = try? container.decode([Media].self), mediaArray.isEmpty {
+            collections = [:]
+        } else {
+            collections = try container.decode([String: [Media]].self)
+        }
+        
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(self.collections)
     }
     
     public func getMedia(for key: String = "default") -> [Media] {
