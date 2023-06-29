@@ -42,4 +42,13 @@ public struct MediaCollectionsContainer: Codable, Equatable {
         return getMedia(for: key).first
     }
     
+    public func allMedia() -> [Media] {
+        
+        return self
+            .collections
+            .map { $0.value }
+            .reduce([], +)
+        
+    }
+    
 }

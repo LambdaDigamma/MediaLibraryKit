@@ -9,6 +9,18 @@ import SwiftUI
 import Nuke
 import NukeUI
 
+public extension URL {
+    
+    init?(string: String?) {
+        if let string {
+            self.init(string: string)
+        } else {
+            return nil
+        }
+    }
+    
+}
+
 public struct GenericMediaView: View {
     
     private let origin: Origin
@@ -34,7 +46,7 @@ public struct GenericMediaView: View {
         resizingMode: ImageResizingMode = .aspectFit
     ) {
         self.origin = .remote
-        self.remoteSource = media?.fullURL
+        self.remoteSource = URL(string: media?.fullURL)
         self.localImage = nil
         self.resizingMode = resizingMode
         self.label = media?.alt
@@ -135,7 +147,11 @@ public struct GenericMediaView: View {
         Text(text)
             .multilineTextAlignment(.center)
             .font(.footnote)
-            .frame(maxWidth: 250)
+            .frame(minWidth: 200)
+            .padding()
+            .onAppear {
+                print("Error loading image", text, String(describing: remoteSource))
+            }
         
     }
     

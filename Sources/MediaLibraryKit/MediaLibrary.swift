@@ -73,8 +73,8 @@ public class MediaLibrary {
         loadingOptions: LoadingOptions = [.downloadOriginal]
     ) -> AnyPublisher<String, URLError> {
         
-        if let fullURL = media.fullURL {
-            return session.downloadTaskPublisher(for: fullURL)
+        if let fullURL = media.fullURL, let url = URL(string: fullURL) {
+            return session.downloadTaskPublisher(for: url)
                 .eraseToAnyPublisher()
                 .map(\.url)
                 .map(\.absoluteString)

@@ -92,7 +92,8 @@ final class MediaCollectionTests: XCTestCase {
         
     }
     
-    func testEmptyCollectionArray() throws {
+    func v
+    () throws {
         
         let json = ##"""
             []

@@ -39,7 +39,7 @@ public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable, Iden
     public var createdAt: Date? = Date()
     public var updatedAt: Date? = Date()
     
-    public var fullURL: URL?
+    public var fullURL: String?
     
     public init(
         id: Int,
@@ -47,7 +47,7 @@ public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable, Iden
         modelID: Int,
         uuid: UUID?,
         collectionName: String,
-        fullURL: URL?,
+        fullURL: String?,
         name: String,
         fileName: String,
         mimeType: MimeType? = nil,
@@ -128,8 +128,8 @@ public struct Media: BaseMedia, Equatable, MediaImageDisplayable, Hashable, Iden
     
     public func data(width: CGFloat) -> MediaImageDataType {
         
-        if let fullURL = fullURL {
-            return .remote(request: ImageRequest(url: fullURL))
+        if let fullURL = fullURL, let url = URL(string: fullURL) {
+            return .remote(request: ImageRequest(url: url))
         } else {
             return .local(image: PlatformImage())
         }
