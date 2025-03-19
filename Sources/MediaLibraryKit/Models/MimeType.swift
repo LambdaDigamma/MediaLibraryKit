@@ -44,6 +44,7 @@ public enum MimeType: String, Codable, Hashable {
     case xls = "application/vnd.ms-excel"
     case xlsx = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     case zip = "application/zip"
+    case avif = "image/avif"
     
     public static let imageMimeTypes: [MimeType] = [
         .png,
@@ -51,7 +52,8 @@ public enum MimeType: String, Codable, Hashable {
         .jpg,
         .tif,
         .webp,
-        .svg
+        .svg,
+        .avif
     ]
     
     public static let displayableByImageProcessingPipeline: [MimeType] = [

@@ -21,16 +21,21 @@ public extension URL {
     
 }
 
+public enum ImageResizingMode {
+    case aspectFit
+    case aspectFill
+}
+
 public struct GenericMediaView: View {
     
     private let origin: Origin
-    private var remoteSource: ImageRequestConvertible?
+    private var remoteSource: ImageRequest?
     private var localImage: SwiftUI.Image?
     private var resizingMode: ImageResizingMode
     private var label: String?
     
     public init(
-        source: ImageRequestConvertible?,
+        source: ImageRequest?,
         label: String? = nil,
         resizingMode: ImageResizingMode = .aspectFit
     ) {
@@ -46,7 +51,7 @@ public struct GenericMediaView: View {
         resizingMode: ImageResizingMode = .aspectFit
     ) {
         self.origin = .remote
-        self.remoteSource = URL(string: media?.fullURL)
+        self.remoteSource = ImageRequest(stringLiteral: media?.fullURL ?? "")
         self.localImage = nil
         self.resizingMode = resizingMode
         self.label = media?.alt
@@ -61,25 +66,6 @@ public struct GenericMediaView: View {
         self.resizingMode = .aspectFill
         self.label = nil
     }
-    
-//    public init(
-//        displayable: MediaImageDisplayable,
-//        resizingMode: ImageResizingMode = .aspectFit,
-//        width: CGFloat = 600
-//    ) {
-//        let image = displayable.data(width: width)
-//        
-//        switch image {
-//            case .local(let image):
-//                self.origin = .local
-//                self.localImage = Image(uiImage: image)
-//            case .remote(let request):
-//                self.origin = .remote
-//                self.remoteSource = request
-//        }
-//        
-//        self.resizingMode = resizingMode
-//    }
     
     public var body: some View {
         
@@ -101,13 +87,14 @@ public struct GenericMediaView: View {
             
         } else {
             
-            LazyImage(source: remoteSource) { (state: LazyImageState) in
+            LazyImage(request: remoteSource) { (state: any LazyImageState) in
                 
                 if let image = state.image {
                     
                     image
                     #if os(iOS)
-                        .resizingMode(resizingMode)
+                        .resizable()
+                        .aspectRatio(contentMode: resizingMode == .aspectFit ? .fit : .fill)
                     #endif
                         .accessibilityLabel(label ?? "")
                         .accessibilityHidden(label == nil)

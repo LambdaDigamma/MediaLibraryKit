@@ -11,10 +11,10 @@ import Nuke
 
 public struct RemoteMediaImage: MediaImageDisplayable {
     
-    public let request: ImageRequestConvertible
+    public let request: ImageRequest
     public let label: String?
     
-    public init(request: ImageRequestConvertible, label: String? = nil) {
+    public init(request: ImageRequest, label: String? = nil) {
         self.request = request
         self.label = label
     }

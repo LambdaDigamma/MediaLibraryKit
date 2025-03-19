@@ -11,7 +11,7 @@ import Nuke
 
 public enum MediaImageDataType {
     case local(image: PlatformImage)
-    case remote(request: ImageRequestConvertible)
+    case remote(request: ImageRequest)
 }
 
 public protocol MediaImageDisplayable {
