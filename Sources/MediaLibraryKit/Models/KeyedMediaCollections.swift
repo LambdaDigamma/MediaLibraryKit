@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-public struct KeyedMediaCollections: Codable, Equatable {
+public struct KeyedMediaCollections: Codable, Equatable, Hashable {
     
     public let collections: [String: [Media]]
     

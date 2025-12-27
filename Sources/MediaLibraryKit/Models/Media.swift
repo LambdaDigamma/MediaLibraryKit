@@ -10,7 +10,7 @@ import Nuke
 import CoreGraphics
 import SwiftUI
 
-public protocol BaseMedia: Codable, Equatable {
+public protocol BaseMedia: Codable, Equatable, Hashable {
     
 //    func getImage(width: CGFloat, height: CGFloat, callback: ((PlatformImage) -> Void))
     
